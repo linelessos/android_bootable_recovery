@@ -43,6 +43,38 @@ cc_library_static {
     ],
 }
 
+cc_defaults {
+    name: "librecovery_defaults",
+
+    defaults: [
+        "recovery_defaults",
+    ],
+
+    shared_libs: [
+        "android.hardware.health@2.0",
+        "libbase",
+        "libbootloader_message",
+        "libcrypto",
+        "libcutils",
+        "libfs_mgr",
+        "liblog",
+        "libziparchive",
+        "libvolume_manager",
+    ],
+
+    static_libs: [
+        "libc++fs",
+        "libinstall",
+        "librecovery_fastboot",
+        "libminui",
+        "libotautil",
+
+        // external dependencies
+        "libhealthhalutils",
+        "libfstab",
+    ],
+}
+
 cc_library_static {
     name: "librecovery",
     recovery_available: true,
