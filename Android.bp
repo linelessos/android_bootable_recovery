@@ -18,3 +18,45 @@ cc_defaults {
     ],
     cpp_std: "c++17",
 }
+
+cc_library_static {
+    name: "librecovery_fastboot",
+    recovery_available: true,
+    defaults: [
+        "recovery_defaults",
+    ],
+
+    srcs: [
+        "fastboot/fastboot.cpp",
+    ],
+
+    shared_libs: [
+        "libbase",
+        "libbootloader_message",
+        "libcutils",
+        "liblog",
+        "librecovery_ui",
+    ],
+
+    static_libs: [
+        "librecovery_ui_default",
+    ],
+}
+
+cc_library_static {
+    name: "librecovery",
+    recovery_available: true,
+
+    defaults: [
+        "librecovery_defaults",
+    ],
+
+    srcs: [
+        "fsck_unshare_blocks.cpp",
+        "recovery.cpp",
+    ],
+
+    shared_libs: [
+        "librecovery_ui",
+    ],
+}
