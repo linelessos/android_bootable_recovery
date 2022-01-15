@@ -17,7 +17,7 @@
 #ifndef _VARIABLES_HEADER_
 #define _VARIABLES_HEADER_
 
-#define TW_MAIN_VERSION_STR       "3.5.2_9"
+#define TW_MAIN_VERSION_STR       "3.6.0_9"
 #define TW_VERSION_STR TW_MAIN_VERSION_STR TW_DEVICE_VERSION
 #define TW_SETTINGS_FILE            ".twrps"
 #define TW_RECOVERY_NAME            "TWRP"
@@ -145,6 +145,7 @@
 #define TW_USE_SHA2                 "tw_use_sha2"
 #define TW_NO_SHA2                  "tw_no_sha2"
 #define TW_UNMOUNT_SYSTEM           "tw_unmount_system"
+#define TW_AUTO_REFLASHTWRP_VAR     "tw_auto_reflashtwrp"
 
 // Also used:
 //   tw_boot_is_mountable

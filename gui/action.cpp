@@ -38,6 +38,7 @@
 #include <sstream>
 #include "../partitions.hpp"
 #include "../twrp-functions.hpp"
+#include "../twrpRepacker.hpp"
 #include "../openrecoveryscript.hpp"
 
 #include "../adb_install.h"
@@ -236,6 +237,7 @@ GUIAction::GUIAction(xml_node<>* node)
 		ADD_ACTION(installapp);
 		ADD_ACTION(uninstalltwrpsystemapp);
 		ADD_ACTION(repackimage);
+		ADD_ACTION(reflashtwrp);
 		ADD_ACTION(fixabrecoverybootloop);
 		ADD_ACTION(applycustomtwrpfolder);
 #ifndef TW_EXCLUDE_NANO
@@ -667,8 +669,10 @@ int GUIAction::copylog(std::string arg __unused)
 	{
 		string dst, curr_storage;
 		int copy_kernel_log = 0;
+		int copy_logcat = 1;
 
 		DataManager::GetValue("tw_include_kernel_log", copy_kernel_log);
+		DataManager::GetValue("tw_include_logcat", copy_logcat);
 		PartitionManager.Mount_Current_Storage(true);
 		curr_storage = DataManager::GetCurrentStoragePath();
 		dst = curr_storage + "/recovery.log";
@@ -676,6 +680,8 @@ int GUIAction::copylog(std::string arg __unused)
 		tw_set_default_metadata(dst.c_str());
 		if (copy_kernel_log)
 			TWFunc::copy_kernel_log(curr_storage);
+		if (copy_logcat)
+			TWFunc::copy_logcat(curr_storage);
 		sync();
 		gui_msg(Msg("copy_log=Copied recovery log to {1}")(dst));
 	} else
@@ -1976,9 +1982,11 @@ int GUIAction::togglebacklight(std::string arg __unused)
 int GUIAction::setbootslot(std::string arg)
 {
 	operation_start("Set Boot Slot");
-	if (!simulate)
+	if (!simulate) {
+		if (PartitionManager.Find_Partition_By_Path("/vendor"))
+			PartitionManager.UnMount_By_Path("/vendor",true);
 		PartitionManager.Set_Active_Slot(arg);
-	else
+	} else
 		simulate_progress_bar();
 	operation_end(0);
 	return 0;
@@ -2167,6 +2175,8 @@ exit:
 int GUIAction::repackimage(std::string arg __unused)
 {
 	int op_status = 1;
+	twrpRepacker repacker;
+
 	operation_start("Repack Image");
 	if (!simulate)
 	{
@@ -2179,7 +2189,7 @@ int GUIAction::repackimage(std::string arg __unused)
 			Repack_Options.Type = REPLACE_KERNEL;
 		else
 			Repack_Options.Type = REPLACE_RAMDISK;
-		if (!PartitionManager.Repack_Images(path, Repack_Options))
+		if (!repacker.Repack_Image_And_Flash(path, Repack_Options))
 			goto exit;
 	} else
 		simulate_progress_bar();
@@ -2189,9 +2199,28 @@ exit:
 	return 0;
 }
 
+int GUIAction::reflashtwrp(std::string arg __unused)
+{
+	int op_status = 1;
+	twrpRepacker repacker;
+
+	operation_start("Repack Image");
+	if (!simulate)
+	{
+		if (!repacker.Flash_Current_Twrp())
+		goto exit;
+	} else
+		simulate_progress_bar();
+	op_status = 0;
+exit:
+	operation_end(op_status);
+	return 0;
+}
 int GUIAction::fixabrecoverybootloop(std::string arg __unused)
 {
 	int op_status = 1;
+	twrpRepacker repacker;
+
 	operation_start("Repack Image");
 	if (!simulate)
 	{
@@ -2207,7 +2236,7 @@ int GUIAction::fixabrecoverybootloop(std::string arg __unused)
 			gui_msg(Msg(msg::kError, "unable_to_locate=Unable to locate {1}.")("/boot"));
 			goto exit;
 		}
-		if (!PartitionManager.Prepare_Repack(part, REPACK_ORIG_DIR, DataManager::GetIntValue("tw_repack_backup_first") != 0, gui_lookup("repack", "Repack")))
+		if (!repacker.Backup_Image_For_Repack(part, REPACK_ORIG_DIR, DataManager::GetIntValue("tw_repack_backup_first") != 0, gui_lookup("repack", "Repack")))
 			goto exit;
 		DataManager::SetProgress(.25);
 		gui_msg("fixing_recovery_loop_patch=Patching kernel...");

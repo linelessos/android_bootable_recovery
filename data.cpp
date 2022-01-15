@@ -755,6 +755,8 @@ void DataManager::SetDefaultValues()
 	mPersist.SetValue(TW_TIME_ZONE_GUISEL, "CST6;CDT,M3.2.0,M11.1.0");
 	mPersist.SetValue(TW_TIME_ZONE_GUIOFFSET, "0");
 	mPersist.SetValue(TW_TIME_ZONE_GUIDST, "1");
+        mPersist.SetValue(TW_AUTO_REFLASHTWRP_VAR, "0");
+
 	mData.SetValue(TW_ACTION_BUSY, "0");
 	mData.SetValue("tw_wipe_cache", "0");
 	mData.SetValue("tw_wipe_dalvik", "0");
@@ -778,6 +780,12 @@ void DataManager::SetDefaultValues()
 	mPersist.SetValue(TW_NO_SHA2, "1");
 #endif
 	mPersist.SetValue(TW_UNMOUNT_SYSTEM, "1");
+
+#if defined BOARD_USES_RECOVERY_AS_BOOT && defined BOARD_BUILD_SYSTEM_ROOT_IMAGE
+	mConst.SetValue("tw_uses_initramfs", "1");
+#else
+	mConst.SetValue("tw_uses_initramfs", "0");
+#endif
 
 #ifdef TW_NO_SCREEN_TIMEOUT
 	mConst.SetValue("tw_screen_timeout_secs", "0");
@@ -923,6 +931,11 @@ void DataManager::SetDefaultValues()
 	mData.SetValue("tw_is_slot_part", "0");
 
 	mData.SetValue("tw_enable_adb_backup", "0");
+
+	if (TWFunc::Path_Exists("/sbin/logcat"))
+		mConst.SetValue("tw_logcat_exists", "1");
+	else
+		mConst.SetValue("tw_logcat_exists", "0");
 
 	if (TWFunc::Path_Exists("/sbin/magiskboot"))
 		mConst.SetValue("tw_has_repack_tools", "1");

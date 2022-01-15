@@ -19,11 +19,11 @@
 		<string name="recovery">Recovery</string>
 		<string name="cache">Cache</string>
 		<string name="data">Data</string>
-		<string name="data_backup">Data (искл. Storage)</string>
-		<string name="sdcard">SDcard</string>
-		<string name="internal">Память устройства</string>
-		<string name="microsd">Micro SDCard</string>
-		<string name="usbotg">USB OTG</string>
+		<string name="data_backup">Data (искл. внутр.память)</string>
+		<string name="sdcard">SD-карта</string>
+		<string name="internal">Внутренняя память</string>
+		<string name="microsd">MicroSD-карта</string>
+		<string name="usbotg">USB-накопитель</string>
 		<string name="android_secure">Android Secure</string>
 		<string name="dalvik">Dalvik/ART Cache</string>
 		<!-- This is a rarely used partition on a Micro SD card for a very old app2sd system -->
@@ -224,8 +224,9 @@
 		<string name="enc_disabled">выключено - установите пароль для включения</string>
 		<string name="enc_enabled">включено</string>
 		<string name="enable_backup_comp_chk">Использовать сжатие</string>
-		<string name="skip_digest_backup_chk" version="2">Пропустить вычисление контрольных сумм</string>
+		<string name="skip_digest_backup_chk" version="2">Не создавать контрольные суммы</string>
 		<string name="disable_backup_space_chk" version="2">Отключить проверку свободного места</string>
+		<string name="skip_digest_zip_chk">Не проверять контрольные суммы ZIP</string>
 		<string name="current_boot_slot">Текущий слот: %tw_active_slot%</string>
 		<string name="boot_slot_a">Слот A</string>
 		<string name="boot_slot_b">Слот B</string>
@@ -292,7 +293,7 @@
 		<string name="rb_recovery_btn">Рекавери</string>
 		<string name="rb_bootloader_btn">Загрузчик</string>
 		<string name="rb_download_btn">Режим загрузки</string>
-		<string name="rb_edl_btn">Edl</string>
+		<string name="rb_edl_btn">EDL</string>
 		<string name="turning_off">Выключение...</string>
 		<string name="swipe_power_off">Свайп для выключения</string>
 		<string name="swipe_power_off_s">Выключение</string>
@@ -316,6 +317,7 @@
 		<string name="settings_gen_s_hdr">Основные</string>
 		<string name="settings_gen_btn">Основные</string>
 		<string name="use_rmrf_chk">Использовать rm -rf вместо форматирования</string>
+		<string name="auto_reflashtwrp_chk">Автоматически перепрошивать TWRP после установки прошивки</string>
 		<string name="use24clock_chk">Использовать 24-часовой формат времени</string>
 		<string name="rev_navbar_chk">Инвертировать порядок навигационных кнопок</string>
 		<string name="simact_chk">Имитация действий для тестирования темы</string>
@@ -333,7 +335,7 @@
 		<string name="time_zone_hdr">Часовой пояс</string>
 		<string name="sel_tz_list">Выбор часового пояса:</string>
 		<!-- Translator note: if it does not make sense to translate the locations or if it makes more sense,
-			 feel free to change the location listed or drop the location entirely and just call it UTC -6 -->
+				feel free to change the location listed or drop the location entirely and just call it UTC -6 -->
 		<string name="utcm11">(UTC-11, SST) о.Мидуэй, Самоа</string>
 		<string name="utcm10">(UTC-10, HAST) Гавайи</string>
 		<string name="utcm9">(UTC-9, AKST) Аляска</string>
@@ -392,7 +394,7 @@
 		<string name="copy_log_complete" version="2">Копирование лога завершено.</string>
 		<string name="fix_context_btn">Исправить контекст</string>
 		<string name="part_sd_btn">Разметка SD-карты</string>
-		<string name="part_sd_s_btn">Разм-ка SD</string>
+		<string name="part_sd_s_btn">Разметка SD</string>
 		<string name="file_manager_btn">Проводник</string>
 		<string name="language_hdr">Язык</string>
 		<string name="terminal_btn">Терминал</string>
@@ -459,6 +461,8 @@
 		<string name="fm_set_perms_hdr">Установить права</string>
 		<string name="fm_perms">Права:</string>
 		<string name="fm_complete">Операция завершена</string>
+		<string name="fm_open_terminal_btn">Открыть терминал здесь</string>
+		<string name="fm_edit_file">Изменить файл</string>
 		<string name="decrypt_data_hdr">Расшифровать данные</string>
 		<string name="decrypt_data_enter_pass">Введите пароль.</string>
 		<string name="decrypt_data_failed">Пароль неверный, попробуйте снова!</string>
@@ -468,8 +472,8 @@
 		<string name="decrypt_data_vold_os_missing">Отсутствуют файлы необходимые для расшифровки vold: {1}</string>
 		<string name="term_hdr">Команда терминала</string>
 		<string name="term_s_hdr">Терминал</string>
-		<string name="term_kill_btn">УБИТЬ</string>
-		<string name="term_sel_folder_hdr">Перейдите к стартовой папке</string>
+		<string name="term_kill_btn">Остановить</string>
+		<string name="term_sel_folder_hdr">Перейдите к начальной папке</string>
 		<string name="adb_sideload_hdr">ADB Sideload</string>
 		<string name="sideload_wipe_dalvik_chk">Очистка Dalvik Cache</string>
 		<string name="sideload_wipe_cache_chk">Очистка Cache</string>
@@ -503,9 +507,16 @@
 		<string name="install_complete">Установка завершена</string>
 		<string name="unpack_error">Ошибка распаковки образа.</string>
 		<string name="repack_error">Ошибка перепаковки образа.</string>
+		<string name="modified_ramdisk_error">файлы рамдиска были изменены, не удалось создать рамдиск для установки, используйте fastboot boot twrp и попробуйте эту функцию снова или воспользуйтесь Установка рекавери в ramdisk.</string>
+		<string name="create_ramdisk_error">не удалось создать рамдиск для установки.</string>
 		<string name="unpacking_image">Распаковка {1}...</string>
 		<string name="repacking_image">Перепаковка {1}...</string>
 		<string name="repack_image_hdr">Выбор образа</string>
+		<string name="repack_overwrite_warning">Если устройство ранее было рутовано, тогда рут перезапишется и нужно будет переустановить его.</string>
+		<string name="reflash_twrp">Установить текущее TWRP</string>
+		<string name="reflash_twrp_confirm">Установить текущее TWRP?</string>
+		<string name="reflashing_twrp">Установка TWRP...</string>
+		<string name="reflash_twrp_complete">TWRP успешно установлено</string>
 		<string name="fix_recovery_loop">Исправить циклическую перезагрузку рекавери</string>
 		<string name="fix_recovery_loop_confirm">Исправить циклическую перезагрузку рекавери?</string>
 		<string name="fixing_recovery_loop">Исправление циклической перезагрузки рекавери...</string>
@@ -515,16 +526,16 @@
 		<string name="decrypt_users">Расшифровка пользователей</string>
 		<string name="decrypt_users_selection">Выберите ID пользователя для расшифровки</string>
 		<string name="select_user">Выбор пользователя</string>
-        <string name="backup_storage_undecrypt_warning">В резервную копию не включены некоторые файлы пользователя {1}, потому что пользователь не расшифрован.</string>
-        <string name="decrypting_user_fbe">Попытка расшифровать FBE пользователя {1}...</string>
+		<string name="backup_storage_undecrypt_warning">В резервную копию не включены некоторые файлы пользователя {1}, потому что пользователь не расшифрован.</string>
+		<string name="decrypting_user_fbe">Попытка расшифровать FBE пользователя {1}...</string>
 		<string name="decrypt_user_success_fbe">Пользователь {1} расшифрован успешно</string>
 		<string name="decrypt_user_fail_fbe">Ошибка расшифровки пользователя {1}</string>
 		<string name="decrypt_data_enter_pass_fbe">Введите пароль пользователя [%tw_crypto_user_id%]</string>
 		<string name="decrypt_data_enter_pattern_fbe">Введите шаблон пользователя [%tw_crypto_user_id%]</string>
 		<string name="multiuser_warning1">Не все пользователи расшифрованы!</string>
-        <string name="multiuser_warning2">Резервное копирование или восстановление могут завершиться неудачно!</string>
+		<string name="multiuser_warning2">Резервное копирование или восстановление могут завершиться неудачно!</string>
 		<string name="multiuser_warning_accept">Всё равно продолжить</string>
-        <string name="multiuser_warning_hdr">Предупреждение о нескольких пользователях</string>
+		<string name="multiuser_warning_hdr">Предупреждение о нескольких пользователях</string>
 
 		<!-- Various console messages - these consist of user displayed messages, oftentimes errors -->
 		<string name="no_kernel_selinux">Чтение SELinux-контекста не поддерживается ядром.</string>
@@ -625,7 +636,7 @@
 		<string name="cannot_resize">Невозможно изменить размер {1}.</string>
 		<string name="repair_resize">Восстановление {1} перед изменением размера.</string>
 		<string name="unable_resize">Не удаётся изменить размер {1}.</string>
-		<string name="no_digest_found" version="2">Отсутствует файл контрольной суммы для '{1}'. Пожалуйста отмените выбор проверки контрольных сумм при восстановлении.</string>
+		<string name="no_digest_found" version="2">Отсутствует файл контрольной суммы для '{1}'. Пожалуйста, отмените выбор проверки контрольных сумм при восстановлении.</string>
 		<string name="digest_fail_match" version="2">Контрольная сумма не соответствует '{1}'.</string>
 		<string name="digest_matched" version="2">Контрольная сумма соответствует '{1}'.</string>
 		<string name="fail_decrypt_tar">Не удаётся расшифровать tar-файл '{1}'</string>
@@ -730,23 +741,24 @@
 		<string name="twrp_adbbu_option">-- эта опция позволяет делать резервное копирование по ADB</string>
 		<string name="partition_not_found">путь: {1} отсутствует в списке разделов.</string>
 		<string name="copy_kernel_log">Kernel Log скопирован в {1}</string>
+		<string name="copy_logcat">Logcat скопирован в {1}</string>
 		<string name="include_kernel_log">Добавить Kernel Log</string>
+		<string name="include_logcat">Добавить Logcat</string>
 		<string name="sha2_chk">Использовать SHA2 для контрольных сумм (иначе - MD5)</string>
 		<string name="unable_set_boot_slot">Ошибка смены слота загрузки bootloader на {1}</string>
 		<string name="unmount_sys_install">Размонтировать System перед установкой ZIP</string>
 		<string name="unmount_system">Размонтирование System...</string>
 		<string name="unmount_system_err">Ошибка размонтирования System</string>
 		<string name="flash_ab_inactive">Прошивка A/B ZIP в неактивный слот: {1}</string>
-        <string name="flash_ab_reboot">Для прошивки дополнительных ZIP перезагрузите рекавери для переключения на обновлённый слот.</string>
+		<string name="flash_ab_reboot">Для прошивки дополнительных ZIP перезагрузите рекавери для переключения на обновлённый слот.</string>
+		<string name="flash_ab_both_slots">Прошить в оба слота</string>
 		<string name="ozip_decrypt_decryption">Начало расшифровки Ozip...</string>
 		<string name="ozip_decrypt_finish">Расшифровка Ozip завершена!</string>
-		<string name="change_twrp_folder_btn">Изменить папку TWRP</string>
-		<string name="change_twrp_folder_on_process">Изменение папки TWRP</string>
+		<string name="data_media_fbe_msg">TWRP не пересоздаёт /data/media на FBE устройствах. Пожалуйста, перезагрузитесь в систему чтобы создать /data/media</string>
+		<string name="restore_system_context">Невозможно получить контекст по умолчанию для {1} -- Android может не загрузиться.</string>
+		<string name="change_twrp_folder_btn">Сменить папку TWRP</string>
+		<string name="change_twrp_folder_on_process">Смена папки TWRP</string>
 		<string name="change_twrp_folder_after_process">Папка TWRP изменена на</string>
 		<string name="tw_folder_exists">Папка с таким именем уже существует!</string>
-		<string name="fm_open_terminal_btn">Открыть терминал здесь</string>
-		<string name="fm_edit_file">Изменить файл</string>
-		<string name="flash_ab_both_slots">Прошить на оба слота</string>
-		<string name="restore_system_context">Невозможно получить контекст по умолчанию для {1} -- Android может не загрузиться.</string>
 	</resources>
 </language>
